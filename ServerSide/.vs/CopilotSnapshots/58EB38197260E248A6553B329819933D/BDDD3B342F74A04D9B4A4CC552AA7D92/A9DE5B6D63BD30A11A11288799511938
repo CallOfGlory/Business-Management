@@ -1,0 +1,152 @@
+﻿using Microsoft.EntityFrameworkCore;
+using ServerSide.Database;
+using System;
+using System.Collections.Generic;
+using System.IO;
+using System.Net;
+using System.Net.Http;
+using System.Text;
+using System.Text.Json;
+using System.Text.Json.Serialization;
+using System.Threading.Tasks;
+using System.Xml.Serialization;
+
+namespace ServerSide.Listeners
+{
+    public class ServerListener
+    {
+        private HttpListener _httpListener = new HttpListener();
+        private DatabaseCrud databaseManager;
+        private readonly HashSet<string> _allowedOrigins = new(StringComparer.OrdinalIgnoreCase)
+        {
+            "http://localhost:5500"
+        };
+
+        public ServerListener(DatabaseCrud database)
+        {
+            databaseManager = database;
+        }
+
+        public void AddPrefix(string prefix)
+        {
+            _httpListener.Prefixes.Add(prefix);
+        }
+
+        public void AddAllowedOrigin(string origin)
+        {
+            if (!string.IsNullOrWhiteSpace(origin))
+                _allowedOrigins.Add(origin.TrimEnd('/'));
+        }
+
+        public async Task StartListeningAsync()
+        {
+            _httpListener.Start();
+            Console.WriteLine("Server is listening...");
+            while (true)
+            {
+                var context = await _httpListener.GetContextAsync();
+                _ = Task.Run(() => ProcessRequest(context));
+            }
+        }
+        private async Task ProcessRequest(HttpListenerContext context)
+        {
+            Console.WriteLine("Received request: " + context.Request.RawUrl);
+
+            // Handle CORS preflight
+            if (HandlePreflight(context))
+                return;
+
+            // Apply CORS headers for actual requests
+            ApplyCorsHeaders(context);
+
+            if (context.Request.RawUrl == "/login")
+            {
+                string d = context.Request.Headers.ToString();
+                using var reader = new StreamReader(context.Request.InputStream, context.Request.ContentEncoding ?? Encoding.UTF8);
+                string body = await reader.ReadToEndAsync();
+                Console.WriteLine("Request Body: " + body);
+
+                var jsonOptions = new JsonSerializerOptions { PropertyNameCaseInsensitive = true };
+                User dto = JsonSerializer.Deserialize<User>(body, jsonOptions);
+                await Verify_login(context, dto);
+            }
+            else
+            {
+                // default response for other endpoints
+                SendResponse(context, "Not found", HttpStatusCode.NotFound);
+            }
+        }
+
+        private bool HandlePreflight(HttpListenerContext context)
+        {
+            var req = context.Request;
+            var res = context.Response;
+            if (!req.HttpMethod.Equals("OPTIONS", StringComparison.OrdinalIgnoreCase))
+                return false;
+
+            string origin = req.Headers["Origin"];
+            if (string.IsNullOrEmpty(origin) || !_allowedOrigins.Contains(origin.TrimEnd('/')))
+            {
+                res.StatusCode = (int)HttpStatusCode.NoContent;
+                res.Close();
+                return true;
+            }
+
+            // Allow any method and any header (as in policy)
+            string requestMethods = req.Headers["Access-Control-Request-Method"] ?? "GET, POST, PUT, DELETE, OPTIONS";
+            string requestHeaders = req.Headers["Access-Control-Request-Headers"] ?? "*";
+
+            res.AddHeader("Access-Control-Allow-Origin", origin);
+            res.AddHeader("Vary", "Origin");
+            res.AddHeader("Access-Control-Allow-Credentials", "true");
+            res.AddHeader("Access-Control-Allow-Methods", requestMethods);
+            res.AddHeader("Access-Control-Allow-Headers", requestHeaders);
+            res.AddHeader("Access-Control-Max-Age", "3600");
+
+            res.StatusCode = (int)HttpStatusCode.NoContent;
+            res.ContentLength64 = 0;
+            res.OutputStream.Close();
+            res.Close();
+            return true;
+        }
+
+        private void ApplyCorsHeaders(HttpListenerContext context)
+        {
+            string origin = context.Request.Headers["Origin"];
+            if (!string.IsNullOrEmpty(origin) && _allowedOrigins.Contains(origin.TrimEnd('/')))
+            {
+                context.Response.AddHeader("Access-Control-Allow-Origin", origin);
+                context.Response.AddHeader("Vary", "Origin");
+                context.Response.AddHeader("Access-Control-Allow-Credentials", "true");
+            }
+        }
+
+        private async Task Verify_login(HttpListenerContext context, User dto)
+        {
+            bool data = await databaseManager.CheckUserDails(dto);
+            if (data)
+            {
+                SendResponse(context, "True");
+            }
+            else
+            {
+                SendResponse(context, "False");
+            }
+        }
+
+        private void SendResponse(HttpListenerContext context, string responseString, HttpStatusCode status = HttpStatusCode.OK)
+        {
+            Console.WriteLine("Sending response: " + responseString);
+            byte[] buffer = Encoding.UTF8.GetBytes(responseString);
+
+            // ensure CORS headers applied
+            ApplyCorsHeaders(context);
+
+            context.Response.StatusCode = (int)status;
+            context.Response.ContentLength64 = buffer.Length;
+            context.Response.OutputStream.Write(buffer, 0, buffer.Length);
+            context.Response.OutputStream.Close();
+        }
+
+    }
+}

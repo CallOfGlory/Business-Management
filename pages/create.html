@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Реєстрація — Система управління бізнесом</title>
+    <link rel="stylesheet" href="../style/create.css">
+    <script src="../scripts/create.js" type="module"></script>
+</head>
+<body>
+    <main class="container">
+        <section class="register-card" aria-labelledby="register-title">
+            <div class="brand">
+                <div class="logo">BMS</div>
+                <h1 id="register-title">Система управління бізнесом</h1>
+                <p class="subtitle">Створіть новий обліковий запис</p>
+            </div>
+
+            <form id="registerForm" class="register-form" novalidate data-action="http://localhost:8080/register" method="post">
+                <div class="form-row">
+                    <label for="fullName">Повне ім'я</label>
+                    <input id="fullName" name="fullName" type="text" placeholder="Іван Петренко" required>
+                    <div class="error" id="fullNameError" aria-live="polite"></div>
+                </div>
+
+                <div class="form-row">
+                    <label for="email">Електронна пошта</label>
+                    <input id="email" name="email" type="email" inputmode="email" placeholder="name@company.com" required>
+                    <div class="error" id="emailError" aria-live="polite"></div>
+                </div>
+
+                <div class="form-row">
+                    <label for="username">Логін</label>
+                    <input id="username" name="username" type="text" placeholder="Ваш унікальний логін" required minlength="3">
+                    <div class="error" id="usernameError" aria-live="polite"></div>
+                </div>
+
+                <div class="form-row password-row">
+                    <label for="password">Пароль</label>
+                    <div class="password-wrap">
+                        <input id="password" name="password" type="password" placeholder="Мінімум 6 символів" required minlength="6">
+                        <button type="button" id="togglePassword" class="toggle-password" aria-label="Показати пароль">👁️</button>
+                    </div>
+                    <div class="error" id="passwordError" aria-live="polite"></div>
+                </div>
+
+                <div class="form-row password-row">
+                    <label for="confirmPassword">Підтвердження пароля</label>
+                    <div class="password-wrap">
+                        <input id="confirmPassword" name="confirmPassword" type="password" placeholder="Повторіть пароль" required minlength="6">
+                        <button type="button" id="toggleConfirmPassword" class="toggle-password" aria-label="Показати пароль">👁️</button>
+                    </div>
+                    <div class="error" id="confirmPasswordError" aria-live="polite"></div>
+                </div>
+
+                <div class="form-row">
+                    <label for="company">Компанія (необов'язково)</label>
+                    <input id="company" name="company" type="text" placeholder="Назва вашої компанії">
+                    <div class="error" id="companyError" aria-live="polite"></div>
+                </div>
+
+                <div class="form-row">
+                    <label for="phone">Телефон (необов'язково)</label>
+                    <input id="phone" name="phone" type="tel" inputmode="tel" placeholder="+380 (XX) XXX XX XX">
+                    <div class="error" id="phoneError" aria-live="polite"></div>
+                </div>
+
+                <div class="form-row agreement">
+                    <label class="checkbox-label">
+                        <input type="checkbox" id="terms" name="terms" required>
+                        <span>Я погоджуюсь з <a href="#" class="link">умовами використання</a> та <a href="#" class="link">політикою конфіденційності</a></span>
+                    </label>
+                    <div class="error" id="termsError" aria-live="polite"></div>
+                </div>
+
+                <div class="form-row">
+                    <button class="btn primary" type="submit">Зареєструватися</button>
+                </div>
+            </form>
+
+            <footer class="register-foot">
+                <p>Вже маєте обліковий запис? <a href="login.html" class="link">Увійдіть</a></p>
+                <p class="support">Потрібна допомога? Зверніться до адміністратора.</p>
+            </footer>
+        </section>
+    </main>
+</body>
+</html>

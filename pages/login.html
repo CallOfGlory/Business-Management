@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Увійти — Система управління бізнесом</title>
+    <link rel="stylesheet" href="../style/login.css">
+    <script src="../scripts/login.js" type="module"></script>
+</head>
+<body>
+    <main class="container">
+        <section class="login-card" aria-labelledby="login-title">
+            <div class="brand">
+                <div class="logo">BMS</div>
+                <h1 id="login-title">Система управління бізнесом</h1>
+                <p class="subtitle">Увійдіть у свій обліковий запис</p>
+            </div>
+
+            <form id="loginForm" class="login-form" novalidate data-action="http://localhost:8080/login" method="post">
+                <div class="form-row">
+                    <label for="email">Електронна пошта</label>
+                    <input id="email" name="email" type="email" inputmode="email" placeholder="name@company.com" required>
+                    <div class="error" id="emailError" aria-live="polite"></div>
+                </div>
+
+                <div class="form-row">
+                    <label for="username">Логін</label>
+                    <input id="username" name="username" type="text" placeholder="Ваш логін" required>
+                    <div class="error" id="usernameError" aria-live="polite"></div>
+                </div>
+
+                <div class="form-row password-row">
+                    <label for="password">Пароль</label>
+                    <div class="password-wrap">
+                        <input id="password" name="password" type="password" placeholder="Ваш пароль" required minlength="6">
+                        <button type="button" id="togglePassword" class="toggle-password" aria-label="Показати пароль">👁️</button>
+                    </div>
+                    <div class="error" id="passwordError" aria-live="polite"></div>
+                </div>
+
+                <div class="form-row actions">
+                    <label class="remember"><input type="checkbox" id="remember" name="remember"> Запам'ятати мене</label>
+                    <a class="forgot" href="#">Забули пароль?</a>
+                </div>
+
+                <div class="form-row">
+                    <button class="btn primary" type="submit">Увійти</button>
+                </div>
+            </form>
+
+            <footer class="login-foot">Потрібна допомога? Зверніться до адміністратора.</footer>
+            <a class="new" href="create.html">Створити Аккаунт</a>
+
+        </section>
+    </main>
+</body>
+</html>

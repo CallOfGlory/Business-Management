@@ -1,0 +1,157 @@
+﻿using Microsoft.EntityFrameworkCore;
+using ServerSide.Database;
+using System;
+using System.Collections.Generic;
+using System.IO;
+using System.Net;
+using System.Net.Http;
+using System.Text;
+using System.Text.Json;
+using System.Text.Json.Serialization;
+using System.Threading.Tasks;
+using System.Xml.Serialization;
+
+namespace ServerSide.Listeners
+{
+    public class ServerListener
+    {
+        private HttpListener _httpListener = new HttpListener();
+        private DatabaseCrud databaseManager;
+        private string _staticFilesRoot = "wwwroot"; // default folder to serve static files from
+
+        public ServerListener(DatabaseCrud database)
+        {
+            databaseManager = database;
+        }
+
+        public void SetStaticFilesRoot(string path)
+        {
+            if (!string.IsNullOrWhiteSpace(path))
+                _staticFilesRoot = path;
+        }
+
+        public void AddPrefix(string prefix)
+        {
+            if (!_httpListener.Prefixes.Contains(prefix))
+                _httpListener.Prefixes.Add(prefix);
+        }
+
+        public async Task StartListeningAsync()
+        {
+            _httpListener.Start();
+            Console.WriteLine("Server is listening...");
+            while (true)
+            {
+                var context = await _httpListener.GetContextAsync();
+                Task _ = Task.Run(() => ProcessRequest(context));
+            }
+        }
+        private async Task ProcessRequest(HttpListenerContext context)
+        {
+            try
+            {
+                Console.WriteLine("Received request: " + context.Request.RawUrl);
+
+                string rawUrl = context.Request.RawUrl ?? "/";
+                // normalize and remove query string
+                string path = rawUrl.Split('?')[0];
+
+                if (path.Equals("/login", StringComparison.OrdinalIgnoreCase) && context.Request.HttpMethod.Equals("POST", StringComparison.OrdinalIgnoreCase))
+                {
+                    using var reader = new StreamReader(context.Request.InputStream, context.Request.ContentEncoding ?? Encoding.UTF8);
+                    string body = await reader.ReadToEndAsync();
+                    Console.WriteLine("Request Body: " + body);
+
+                    var jsonOptions = new JsonSerializerOptions { PropertyNameCaseInsensitive = true };
+                    User dto = JsonSerializer.Deserialize<User>(body, jsonOptions);
+                    await Verify_login(context, dto);
+                    return;
+                }
+
+                // Serve static files for other requests (method 1: frontend + API on same origin)
+                ServeStaticFile(context, path);
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("Error processing request: " + ex);
+                try
+                {
+                    context.Response.StatusCode = (int)HttpStatusCode.InternalServerError;
+                    byte[] buffer = Encoding.UTF8.GetBytes("Internal Server Error");
+                    context.Response.ContentLength64 = buffer.Length;
+                    context.Response.OutputStream.Write(buffer, 0, buffer.Length);
+                    context.Response.OutputStream.Close();
+                }
+                catch { }
+            }
+        }
+
+        private void ServeStaticFile(HttpListenerContext context, string path)
+        {
+            // default to index.html for root or directory
+            if (path == "/")
+                path = "/index.html";
+
+            // prevent path traversal
+            string relativePath = path.TrimStart('/').Replace('/', Path.DirectorySeparatorChar);
+            string filePath = Path.Combine(AppContext.BaseDirectory, _staticFilesRoot, relativePath);
+
+            if (!File.Exists(filePath))
+            {
+                context.Response.StatusCode = (int)HttpStatusCode.NotFound;
+                byte[] notFound = Encoding.UTF8.GetBytes("Not Found");
+                context.Response.ContentLength64 = notFound.Length;
+                context.Response.OutputStream.Write(notFound, 0, notFound.Length);
+                context.Response.OutputStream.Close();
+                return;
+            }
+
+            string contentType = GetContentTypeByExtension(Path.GetExtension(filePath));
+            context.Response.ContentType = contentType;
+            byte[] fileBytes = File.ReadAllBytes(filePath);
+            context.Response.ContentLength64 = fileBytes.Length;
+            context.Response.OutputStream.Write(fileBytes, 0, fileBytes.Length);
+            context.Response.OutputStream.Close();
+        }
+
+        private static string GetContentTypeByExtension(string ext)
+        {
+            return ext.ToLowerInvariant() switch
+            {
+                ".html" => "text/html; charset=utf-8",
+                ".htm" => "text/html; charset=utf-8",
+                ".js" => "application/javascript; charset=utf-8",
+                ".css" => "text/css; charset=utf-8",
+                ".json" => "application/json; charset=utf-8",
+                ".png" => "image/png",
+                ".jpg" => "image/jpeg",
+                ".jpeg" => "image/jpeg",
+                ".gif" => "image/gif",
+                ".svg" => "image/svg+xml",
+                _ => "application/octet-stream",
+            };
+        }
+
+        private async Task Verify_login(HttpListenerContext context, User dto)
+        {
+            bool data = await databaseManager.CheckUserDails(dto);
+            if (data)
+            {
+                SendResponse(context, "True");
+            }
+            else
+            {
+                SendResponse(context, "False");
+            }
+        }
+
+        private void SendResponse(HttpListenerContext context, string responseString)
+        {
+            Console.WriteLine("Sending response: " + responseString);
+            byte[] buffer = Encoding.UTF8.GetBytes(responseString);
+            context.Response.ContentLength64 = buffer.Length;
+            context.Response.OutputStream.Write(buffer, 0, buffer.Length);
+            context.Response.OutputStream.Close();
+        }
+    }
+}
