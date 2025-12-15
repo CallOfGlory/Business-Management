@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BMS — Система управління бізнесом</title>
+    <link rel="stylesheet" href="../style/main_window.css">
+    <script src="../scripts/main_window.js" type="module"></script>
+</head>
+<body>
+    <!-- Бокова панель навігації -->
+    <nav class="sidebar" aria-label="Основна навігація">
+        <div class="sidebar-header">
+            <div class="logo">BMS</div>
+            <h1 class="app-title">Business Management System</h1>
+            <div class="user-info">
+                <div class="user-avatar" id="userAvatar">
+                    <span id="avatarInitials">ІП</span>
+                </div>
+                <div class="user-details">
+                    <span id="userName">Username</span>
+                    <span id="email">email</span>
+                </div>
+            </div>
+        </div>
+
+        <ul class="nav-menu" id="navMenu">
+            <!-- Профіль -->
+            <li class="nav-item active">
+                <a href="#profile" class="nav-link">
+                    <span class="nav-icon">👤</span>
+                    <span class="nav-text">Профіль</span>
+                </a>
+            </li>
+            
+            <!-- Аналітика -->
+            <li class="nav-item">
+                <a href="#analytics" class="nav-link">
+                    <span class="nav-icon">📊</span>
+                    <span class="nav-text">Аналітика</span>
+                </a>
+            </li>
+            
+            <!-- Менеджмент -->
+            <li class="nav-item">
+                <a href="#management" class="nav-link">
+                    <span class="nav-icon">🏢</span>
+                    <span class="nav-text">Менеджмент</span>
+                </a>
+            </li>
+            
+            <!-- Налаштування -->
+            <li class="nav-item">
+                <a href="#settings" class="nav-link">
+                    <span class="nav-icon">⚙️</span>
+                    <span class="nav-text">Налаштування</span>
+                </a>
+            </li>
+            
+            <!-- Додатково: Фінанси -->
+            <li class="nav-item">
+                <a href="#finance" class="nav-link">
+                    <span class="nav-icon">💰</span>
+                    <span class="nav-text">Фінанси</span>
+                </a>
+            </li>
+            
+            <!-- Додатково: Клієнти -->
+            <li class="nav-item">
+                <a href="#clients" class="nav-link">
+                    <span class="nav-icon">👥</span>
+                    <span class="nav-text">Клієнти</span>
+                </a>
+            </li>
+            
+            <!-- Додатково: Проєкти -->
+            <li class="nav-item">
+                <a href="#projects" class="nav-link">
+                    <span class="nav-icon">📁</span>
+                    <span class="nav-text">Проєкти</span>
+                </a>
+            </li>
+            
+            <!-- Додатково: Звіти -->
+            <li class="nav-item">
+                <a href="#reports" class="nav-link">
+                    <span class="nav-icon">📋</span>
+                    <span class="nav-text">Звіти</span>
+                </a>
+            </li>
+        </ul>
+
+        <div class="sidebar-footer">
+            <button class="nav-btn" id="logoutBtn" aria-label="Вийти">
+                <span class="nav-icon">🚪</span>
+                <span class="nav-text">Вийти</span>
+            </button>
+        </div>
+    </nav>
+
+    <!-- Основна область контенту -->
+    <main class="main-content">
+        <!-- Верхня панель інструментів -->
+        <header class="top-bar">
+            <div class="top-bar-left">
+                <h2 class="page-title" id="pageTitle">Головна панель</h2>
+            </div>
+            <div class="top-bar-right">
+                <div class="search-box">
+                    <input type="text" id="globalSearch" placeholder="Пошук...">
+                    <button class="search-btn" aria-label="Пошук">🔍</button>
+                </div>
+                <button class="notification-btn" id="notificationBtn" aria-label="Сповіщення">
+                    <span class="notification-icon">🔔</span>
+                    <span class="notification-count" id="notificationCount">0</span>
+                </button>
+                <div class="quick-actions">
+                    <button class="action-btn" id="quickAddBtn" aria-label="Швидке додавання">
+                        <span>+</span>
+                    </button>
+                </div>
+            </div>
+        </header>
+
+        <!-- Контейнер для динамічного контенту -->
+        <div class="content-container" id="content">
+            <!-- Контент буде завантажуватись тут -->
+            <div class="loading-state" id="loadingState">
+                <div class="loading-spinner"></div>
+                <p>Завантаження даних...</p>
+            </div>
+            
+            <!-- Контент для профілю (прихований за замовчуванням) -->
+            <div id="profileContent" class="content-section" style="display: none;">
+                <div class="profile-header">
+                    <h3>Профіль користувача</h3>
+                    <p>Керування вашим обліковим записом</p>
+                </div>
+                <div class="profile-info" id="profileInfo">
+                    <!-- Дані будуть заповнені JavaScript -->
+                </div>
+            </div>
+            
+            <!-- Контент для аналітики -->
+            <div id="analyticsContent" class="content-section" style="display: none;">
+                <h3>Аналітика бізнесу</h3>
+                <p>Статистика та аналітичні дані</p>
+            </div>
+            
+            <!-- Контент для менеджменту -->
+            <div id="managementContent" class="content-section" style="display: none;">
+                <h3>Управління бізнесом</h3>
+                <p>Керування проєктами та завданнями</p>
+            </div>
+            
+            <!-- Контент для налаштувань -->
+            <div id="settingsContent" class="content-section" style="display: none;">
+                <h3>Налаштування системи</h3>
+                <p>Конфігурація та параметри</p>
+            </div>
+        </div>
+
+        <!-- Нижній колонтитул -->
+        <footer class="main-footer">
+            <div class="footer-content">
+                <span class="copyright">© 2024 Business Management System</span>
+                <div class="footer-links">
+                    <span id="serverStatus" class="status-indicator online">
+                        <span class="status-dot"></span>
+                        Сервер: онлайн
+                    </span>
+                    <span id="lastUpdate" class="update-time">Останнє оновлення: --:--</span>
+                </div>
+            </div>
+        </footer>
+    </main>
+
+    <!-- Модальні вікна (спочатку приховані) -->
+    <div class="modal-overlay" id="modalOverlay" style="display: none;">
+        <div class="modal" id="modal">
+            <div class="modal-header">
+                <h3 id="modalTitle">Модальне вікно</h3>
+                <button class="modal-close" id="modalClose" aria-label="Закрити">×</button>
+            </div>
+            <div class="modal-body" id="modalBody">
+                <!-- Контент модального вікна -->
+            </div>
+        </div>
+    </div>
+</body>
+</html>

@@ -32,6 +32,9 @@ namespace ServerSide.Database
         [MaxLength(200)]
         public string Full_Name { get; set; }
 
+        [JsonPropertyName("token")]
+        public string Token { get; set; }
+
         public void Print()
         {
             Console.WriteLine($"Username: {Login}, Password: {Password}, Email: {Email}");

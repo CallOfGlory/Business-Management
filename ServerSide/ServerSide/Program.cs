@@ -9,6 +9,7 @@ namespace ServerSide
     {
         static async Task Main(string[] args)
         {
+            TokenModule tokenModule = new TokenModule();
             DatabaseCrud databaseManager = new DatabaseCrud();
             User user = new User
             {
@@ -33,7 +34,7 @@ namespace ServerSide
             //bool uodateEmail = await databaseManager.UpdateUserEmail(user, "test@gmail.com");
             //Console.WriteLine($"Email updated: {uodateEmail}");
 
-            ServerListener serverListener = new ServerListener(databaseManager);
+            ServerListener serverListener = new ServerListener(databaseManager, tokenModule);
             serverListener.AddPrefix("http://localhost:8080/");
             await serverListener.StartListeningAsync();
         }

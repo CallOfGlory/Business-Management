@@ -26,7 +26,7 @@ namespace ServerSide.Database
         async public void AddUserAsync(User user)
         {
             using var connection = new SqlConnection(_connectionString);
-            string query = "INSERT INTO Users (Login, Email, Password, CreatedAt, Company, Full_Name, Phone) VALUES (@Login, @Email, @Password, @CreatedAt, @Company, @Full_Name, @Phone)";
+            string query = "INSERT INTO Users (Login, Email, Password, CreatedAt, Company, Full_Name, Phone, Token) VALUES (@Login, @Email, @Password, @CreatedAt, @Company, @Full_Name, @Phone, @Token)";
             connection.Execute(query, user);
         }
 
@@ -34,7 +34,7 @@ namespace ServerSide.Database
         {
             using var connection = new SqlConnection(_connectionString);
 
-            string query = "SELECT COUNT(1) FROM Users WHERE Login = @Login AND Password = @Password AND Email = @Email";
+            string query = "SELECT * FROM Users WHERE Login = @Login AND Password = @Password AND Email = @Email";
             int result = Convert.ToInt16(connection.ExecuteScalar(query, new { user.Login, user.Password, user.Email }));
             if (result > 0)
             {
@@ -90,6 +90,29 @@ namespace ServerSide.Database
             {
                 return false;
             }
+        }
+
+        async public Task<User> GetUserByToken(string token)
+        {
+            Console.WriteLine("Getting user by token: " + token);
+            using var connection = new SqlConnection(_connectionString);
+            string query = "SELECT Id, Login, Email, Company, Full_Name, Phone FROM Users WHERE Token = @Token";
+            User user = connection.QuerySingleOrDefault<User>(query, new { Token = token });
+            return user;
+        }
+
+        async public Task<User> GetUserByEmail(string email)
+        {
+            using var connection = new SqlConnection(_connectionString);
+            string query = "SELECT * FROM Users WHERE Email = @Email";
+            User user = connection.QuerySingleOrDefault<User>(query, new { Email = email });
+            return user;
+        }
+        async public void UpdateUserTokenByEmail(User user, string email)
+        {
+            using var connection = new SqlConnection(_connectionString);
+            string query = "UPDATE Users SET Token = @Token WHERE Email = @Email";
+            connection.Execute(query, new { user.Token, Email = email });
         }
     }
 }

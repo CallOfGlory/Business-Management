@@ -1,3 +1,5 @@
+import { save_storage } from "./helper_modules.js";
+
 const form = document.getElementById('registerForm');
 const full_name = document.getElementById('fullName');
 const email = document.getElementById('email');
@@ -47,15 +49,18 @@ form.addEventListener("submit", (e) => {
         if(check_filling())
         {
             if(password_1.value == password_2.value){
-                alert("Профіль був успішно зареєстрований!")
                 passwordError.innerHTML = ""
                 let final_data = form_json()
                 fetch("http://localhost:8080/register", {
                     method: "POST",
+                    credentials: "include",
+                    headers: {
+                      "Content-Type": "application/json",
+                    },
                     body: JSON.stringify(final_data),
                 })
                 .then((e) => e.text())
-                .then((ans) => alert(ans))
+                .then((ans) => handle_registration(ans))
             }
             if(password_1.value != password_2.value)
             {
@@ -96,3 +101,5 @@ function form_json()
 
     return final_data
 }
+
+ 

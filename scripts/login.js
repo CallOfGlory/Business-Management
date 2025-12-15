@@ -1,3 +1,5 @@
+import { save_storage  } from "./helper_modules.js";
+
 const form = document.getElementById('loginForm');
 const email = document.getElementById('email');
 const username = document.getElementById('username');
@@ -35,7 +37,9 @@ form?.addEventListener('submit', (e)=>{
       {
         fetch("http://localhost:8080/login", {
             method: "POST",
+            credentials: "include",
             body: JSON.stringify(final_data),
+            
         })
         .then((e) => e.text())
         .then((ans) => alert(ans))
@@ -44,5 +48,27 @@ form?.addEventListener('submit', (e)=>{
         alert(e)
       }
     }
+  }
+});
+
+document.addEventListener("DOMContentLoaded", (e) => {
+  const token = cookieStore.get("AuthToken")
+  if(token != null)
+  {
+    fetch("http://localhost:8080/check_auth", {
+      method: "POST",
+      credentials: "include",
+      body: token,
+    })
+    .then((e) => (e.text()))
+    .then((res) => {
+      if(res != "False")
+      {
+        save_storage(res)
+        window.location.href = "http://localhost:5500/pages/main_window.html"
+      }
+      
+    }
+  )
   }
 });

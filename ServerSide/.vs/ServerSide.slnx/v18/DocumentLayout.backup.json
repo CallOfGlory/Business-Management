@@ -7,12 +7,20 @@
       "RelativeMoniker": "D:0:0:{54E06A78-6AAA-DE58-6348-839E3B381A84}|ServerSide\\ServerSide.csproj|solutionrelative:serverside\\database\\databasecrud.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{54E06A78-6AAA-DE58-6348-839E3B381A84}|ServerSide\\ServerSide.csproj|c:\\users\\oleksii#\\desktop\\programing\\js(it-step)\\final_project\\serverside\\serverside\\database\\databasemodules.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{54E06A78-6AAA-DE58-6348-839E3B381A84}|ServerSide\\ServerSide.csproj|solutionrelative:serverside\\database\\databasemodules.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
       "AbsoluteMoniker": "D:0:0:{54E06A78-6AAA-DE58-6348-839E3B381A84}|ServerSide\\ServerSide.csproj|c:\\users\\oleksii#\\desktop\\programing\\js(it-step)\\final_project\\serverside\\serverside\\listeners\\serverlistener.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{54E06A78-6AAA-DE58-6348-839E3B381A84}|ServerSide\\ServerSide.csproj|solutionrelative:serverside\\listeners\\serverlistener.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{54E06A78-6AAA-DE58-6348-839E3B381A84}|ServerSide\\ServerSide.csproj|c:\\users\\oleksii#\\desktop\\programing\\js(it-step)\\final_project\\serverside\\serverside\\listeners\\cookiemanager.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{54E06A78-6AAA-DE58-6348-839E3B381A84}|ServerSide\\ServerSide.csproj|solutionrelative:serverside\\listeners\\cookiemanager.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{54E06A78-6AAA-DE58-6348-839E3B381A84}|ServerSide\\ServerSide.csproj|c:\\users\\oleksii#\\desktop\\programing\\js(it-step)\\final_project\\serverside\\serverside\\token\\tokenmodule.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{54E06A78-6AAA-DE58-6348-839E3B381A84}|ServerSide\\ServerSide.csproj|solutionrelative:serverside\\token\\tokenmodule.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{54E06A78-6AAA-DE58-6348-839E3B381A84}|ServerSide\\ServerSide.csproj|c:\\users\\oleksii#\\desktop\\programing\\js(it-step)\\final_project\\serverside\\serverside\\database\\databasemodules.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{54E06A78-6AAA-DE58-6348-839E3B381A84}|ServerSide\\ServerSide.csproj|solutionrelative:serverside\\database\\databasemodules.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{54E06A78-6AAA-DE58-6348-839E3B381A84}|ServerSide\\ServerSide.csproj|c:\\users\\oleksii#\\desktop\\programing\\js(it-step)\\final_project\\serverside\\serverside\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
@@ -26,17 +34,43 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 1,
+          "SelectedChildIndex": 3,
           "Children": [
             {
               "$type": "Document",
-              "DocumentIndex": 1,
+              "DocumentIndex": 2,
+              "Title": "CookieManager.cs",
+              "DocumentMoniker": "C:\\Users\\Oleksii#\\Desktop\\programing\\JS(IT-step)\\final_project\\ServerSide\\ServerSide\\Listeners\\CookieManager.cs",
+              "RelativeDocumentMoniker": "ServerSide\\Listeners\\CookieManager.cs",
+              "ToolTip": "C:\\Users\\Oleksii#\\Desktop\\programing\\JS(IT-step)\\final_project\\ServerSide\\ServerSide\\Listeners\\CookieManager.cs",
+              "RelativeToolTip": "ServerSide\\Listeners\\CookieManager.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAqwBIAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-12-12T00:51:05.015Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "TokenModule.cs",
+              "DocumentMoniker": "C:\\Users\\Oleksii#\\Desktop\\programing\\JS(IT-step)\\final_project\\ServerSide\\ServerSide\\Token\\TokenModule.cs",
+              "RelativeDocumentMoniker": "ServerSide\\Token\\TokenModule.cs",
+              "ToolTip": "C:\\Users\\Oleksii#\\Desktop\\programing\\JS(IT-step)\\final_project\\ServerSide\\ServerSide\\Token\\TokenModule.cs",
+              "RelativeToolTip": "ServerSide\\Token\\TokenModule.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAwAAAAFAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-12-10T21:25:12.172Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
               "Title": "DataBaseModules.cs",
               "DocumentMoniker": "C:\\Users\\Oleksii#\\Desktop\\programing\\JS(IT-step)\\final_project\\ServerSide\\ServerSide\\Database\\DataBaseModules.cs",
               "RelativeDocumentMoniker": "ServerSide\\Database\\DataBaseModules.cs",
               "ToolTip": "C:\\Users\\Oleksii#\\Desktop\\programing\\JS(IT-step)\\final_project\\ServerSide\\ServerSide\\Database\\DataBaseModules.cs",
               "RelativeToolTip": "ServerSide\\Database\\DataBaseModules.cs",
-              "ViewState": "AgIAAAsAAAAAAAAAAAAQwCAAAAAfAAAAAAAAAA==",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAACMAAAAbAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-12-06T22:37:06.103Z",
               "EditorCaption": ""
@@ -49,33 +83,33 @@
               "RelativeDocumentMoniker": "ServerSide\\Database\\DatabaseCrud.cs",
               "ToolTip": "C:\\Users\\Oleksii#\\Desktop\\programing\\JS(IT-step)\\final_project\\ServerSide\\ServerSide\\Database\\DatabaseCrud.cs",
               "RelativeToolTip": "ServerSide\\Database\\DatabaseCrud.cs",
-              "ViewState": "AgIAAAsAAAAAAAAAAAAqwCIAAABIAAAAAAAAAA==",
+              "ViewState": "AgIAAFAAAAAAAAAAAAAwwF4AAAAuAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-12-04T19:19:34.5Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 2,
+              "DocumentIndex": 1,
               "Title": "ServerListener.cs",
               "DocumentMoniker": "C:\\Users\\Oleksii#\\Desktop\\programing\\JS(IT-step)\\final_project\\ServerSide\\ServerSide\\Listeners\\ServerListener.cs",
               "RelativeDocumentMoniker": "ServerSide\\Listeners\\ServerListener.cs",
               "ToolTip": "C:\\Users\\Oleksii#\\Desktop\\programing\\JS(IT-step)\\final_project\\ServerSide\\ServerSide\\Listeners\\ServerListener.cs",
               "RelativeToolTip": "ServerSide\\Listeners\\ServerListener.cs",
-              "ViewState": "AgIAAFMAAAAAAAAAAAAQwGUAAAAsAAAAAAAAAA==",
+              "ViewState": "AgIAAJMAAAAAAAAAAAAwwKgAAABIAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-12-06T20:44:11.297Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 3,
+              "DocumentIndex": 5,
               "Title": "Program.cs",
               "DocumentMoniker": "C:\\Users\\Oleksii#\\Desktop\\programing\\JS(IT-step)\\final_project\\ServerSide\\ServerSide\\Program.cs",
               "RelativeDocumentMoniker": "ServerSide\\Program.cs",
               "ToolTip": "C:\\Users\\Oleksii#\\Desktop\\programing\\JS(IT-step)\\final_project\\ServerSide\\ServerSide\\Program.cs",
               "RelativeToolTip": "ServerSide\\Program.cs",
-              "ViewState": "AgIAAAYAAAAAAAAAAAAAAA8AAAApAAAAAAAAAA==",
+              "ViewState": "AgIAABMAAAAAAAAAAAAgwCQAAAA+AAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-12-04T18:24:25.22Z",
               "EditorCaption": ""
